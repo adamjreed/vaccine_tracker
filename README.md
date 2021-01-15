@@ -1,6 +1,6 @@
 # vaccine_tracker
 
-This is a basic app that scrapes the Dekalb County, GA vaccine signup page and send a test message to a list of phone 
+This is a basic app that scrapes the Dekalb County, GA vaccine signup page and send a text message to a list of phone 
 numbers if the page is not showing its "no appointments available" messaging.
 
 ## Example Config
