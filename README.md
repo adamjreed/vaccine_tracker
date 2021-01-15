@@ -3,7 +3,7 @@
 This is a basic app that scrapes the Dekalb County, GA vaccine signup page and send a test message to a list of phone 
 numbers if the page is not showing its "no appointments available" messaging.
 
-##Example Config
+## Example Config
 
 Place the following in AWS Parameter Store under `/[stage]/vaccine_tracker/config`:
 
@@ -46,7 +46,7 @@ the secret in your config json:
 }
 ```
 
-##Deploying
+## Deploying
 
 Dev environment:
 `make deploy`
@@ -54,7 +54,7 @@ Dev environment:
 Prod environment:
 `make deploy-prod`
 
-##Manual Triggering
+## Manual Triggering
 
 The prod environment will automatically run on a cron every five minutes. If you want to manually trigger either 
 environment you can run the following AWS CLI command:
