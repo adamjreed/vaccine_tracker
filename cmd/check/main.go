@@ -50,7 +50,7 @@ func Handler() error {
 				resp, _, _ := container.Twilio.SendSMS(
 					container.Config.SMS.From,
 					to,
-					fmt.Sprintf("COVID vaccine page change detected. Appointments may be available. Go check now: %s", container.Config.Check.URL),
+					fmt.Sprintf("COVID vaccine page change detected. Appointments may be available. Go check now: %s. \n\n Reply STOP to stop.", container.Config.Check.URL),
 					"",
 					"",
 				)
