@@ -1,0 +1,44 @@
+service: vaccine-tracker
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: go1.x
+  lambdaHashingVersion: 20201221
+  stage: dev
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'ssm:GetParameter'
+        - 'ssm:PutParameter'
+      Resource:
+        - Fn::Sub: 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${self:custom.stage}/vaccine_tracker/*'
+        - Fn::Sub: 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/aws/reference/secretsmanager/${self:custom.stage}/vaccine_tracker/twilio/auth_token'
+    - Effect: 'Allow'
+      Action:
+        - 'secretsmanager:GetSecretValue'
+      Resource:
+        Fn::Sub: "arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:${self:custom.stage}/vaccine_tracker/twilio/auth_token-??????"
+
+package:
+  exclude:
+    - ./**
+  include:
+    - ./bin/check
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  dev:
+    events:
+      [ ]
+  prod:
+    events:
+      - schedule: rate(5 minutes)
+
+functions:
+  check:
+    handler: bin/check
+    environment:
+      STAGE: ${self:custom.stage}
+    events:
+      ${self:custom.${self:custom.stage}.events}
